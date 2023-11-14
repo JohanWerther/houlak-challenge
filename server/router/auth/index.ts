@@ -7,4 +7,4 @@ const authRouter = Router();
 authRouter.get("/login", login);
 authRouter.get("/callback", callback);
 
-export default authRouter;
+export { authRouter };
