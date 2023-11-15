@@ -3,7 +3,7 @@ import type { GetArtistAlbumsResponse } from "../../../index";
 
 export default function useArtistSearch(): UseSearchArtistReturn {
   const [isLoading, setIsLoading] = useState(false);
-  const [artistAlbums, setArtistAlbums] =
+  const [artistData, setArtistData] =
     useState<GetArtistAlbumsResponse | null>(null);
 
   const getArtistAlbums: UseSearchArtistReturn["getArtistAlbums"] = async (
@@ -16,18 +16,18 @@ export default function useArtistSearch(): UseSearchArtistReturn {
     if (res.status !== 200)
       throw new Error("The server response with a satuts code: " + res.status);
     const data = await res.json();
-    setArtistAlbums(data);
+    setArtistData(data);
   };
 
   return {
     getArtistAlbums,
     isLoading,
-    artistAlbums,
+    artistData,
   };
 }
 
 export type UseSearchArtistReturn = {
   getArtistAlbums: (search: URLSearchParams) => void;
   isLoading: boolean;
-  artistAlbums: GetArtistAlbumsResponse | null;
+  artistData: GetArtistAlbumsResponse | null;
 };
