@@ -7,6 +7,7 @@ import { AppError } from "./models/app-error.ts";
 import { apiRouter } from "./router/api/index.ts";
 import { authRouter } from "./router/auth/index.ts";
 import { AxiosError } from "axios";
+import { sequelize } from "./database/db.ts";
 
 const app = express();
 app.use(cookieParser());
@@ -38,4 +39,16 @@ app.use(
   }
 );
 
-ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Database sincronized");
+    ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
+  })
+  .catch(() => {
+    console.log("Could not init Database");
+  });
+
+process.on("SIGINT", () => {
+  sequelize.close().catch(console.log);
+});
