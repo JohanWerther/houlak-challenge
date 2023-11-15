@@ -7,6 +7,7 @@ export default function useArtistSearch(): UseSearchArtistReturn {
   const [artistData, setArtistData] = useState<GetArtistAlbumsResponse | null>(
     null
   );
+  const [didSearch, setDidSearch] = useState(false);
 
   const getArtistAlbums: UseSearchArtistReturn["getArtistAlbums"] = async (
     search
@@ -18,6 +19,7 @@ export default function useArtistSearch(): UseSearchArtistReturn {
     if (res.status !== 200)
       throw new HttpError("Failed to get artist's albums", res.status);
     const data = await res.json();
+    setDidSearch(true);
     setArtistData(data);
   };
 
@@ -25,6 +27,7 @@ export default function useArtistSearch(): UseSearchArtistReturn {
     getArtistAlbums,
     isLoading,
     artistData,
+    didSearch,
   };
 }
 
@@ -32,4 +35,5 @@ export type UseSearchArtistReturn = {
   getArtistAlbums: (search: URLSearchParams) => Promise<void>;
   isLoading: boolean;
   artistData: GetArtistAlbumsResponse | null;
+  didSearch: boolean;
 };

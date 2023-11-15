@@ -5,9 +5,11 @@ import { Button } from "./components/ui/button";
 import ArtistCover from "./components/artist-cover";
 import ArtistAlbumsList from "./components/artist-albums-list";
 import useArtistSearch from "./lib/hooks/use-artist-search";
+import EmptyState from "./components/empty-state";
 
 function App() {
-  const { artistData, getArtistAlbums, isLoading } = useArtistSearch();
+  const { artistData, getArtistAlbums, isLoading, didSearch } =
+    useArtistSearch();
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -26,6 +28,7 @@ function App() {
       </Header>
       <ArtistCover artist={artistData} />
       <main>
+        {!didSearch ? <EmptyState /> : null}
         {artistData?.albums?.length ? (
           <ArtistAlbumsList albums={artistData.albums} />
         ) : null}
