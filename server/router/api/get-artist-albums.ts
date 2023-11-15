@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import catchAsync from "../../utils/catch-async.ts";
 import querystring from "querystring";
 import { AppError } from "../../models/app-error.ts";
@@ -25,37 +25,24 @@ async function getAristByName(name: string, accessToken: string) {
     "&" +
     new URLSearchParams({ type: "artist" });
 
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    });
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
 
-    if (response.data.artist?.length === 0)
-      throw new AppError("Not found", 404);
-    return response.data.artists.items[0] as SingleArtist;
-  } catch (err) {
-    console.log(err);
-    if (err instanceof AxiosError) {
-      throw new AppError(
-        `Spotify response with a status of ${err.status}`,
-        err.status
-      );
-    } else throw new Error((err as Error).message);
-  }
+  if (response.data.artists?.items.length === 0)
+    throw new AppError("Not found", 404);
+  console.log(response.data.artists.items[0].images)
+  return response.data.artists.items[0] as SingleArtist;
 }
 
 async function getArtistAlbumsById(artistId: string, accessToken: string) {
   const url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
-  try {
-    const response = await axios.get(url, {
-      headers: { Authorization: "Bearer " + accessToken },
-    });
-    console.log(response.data);
-    return response.data.items as SimplifiedAlbumObject[];
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
+
+  const response = await axios.get(url, {
+    headers: { Authorization: "Bearer " + accessToken },
+  });
+
+  return response.data.items as SimplifiedAlbumObject[];
 }
