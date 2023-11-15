@@ -1,11 +1,13 @@
-import Header from "./components/header";
 import Search from "./components/search";
-import { Button } from "./components/ui/button";
-import useArtistSearch from "./lib/hooks/use-artist-search";
+import Header from "./components/header";
 import useAuth from "./lib/hooks/use-auth";
+import { Button } from "./components/ui/button";
+import ArtistCover from "./components/artist-cover";
+import ArtistAlbumsList from "./components/artist-albums-list";
+import useArtistSearch from "./lib/hooks/use-artist-search";
 
 function App() {
-  const { artistAlbums, getArtistAlbums, isLoading } = useArtistSearch();
+  const { artistData, getArtistAlbums, isLoading } = useArtistSearch();
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -22,13 +24,12 @@ function App() {
           </div>
         )}
       </Header>
-      {artistAlbums?.albums?.length
-        ? artistAlbums.albums.map((a) => (
-            <div key={a.id}>
-              <img src={a.images[0].url} alt="" className="max-w-[300px]" />
-            </div>
-          ))
-        : null}
+      <ArtistCover artist={artistData} />
+      <main>
+        {artistData?.albums?.length ? (
+          <ArtistAlbumsList albums={artistData.albums} />
+        ) : null}
+      </main>
     </>
   );
 }
