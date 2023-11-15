@@ -6,6 +6,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { AppError } from "./models/app-error.ts";
 import { apiRouter } from "./router/api/index.ts";
 import { authRouter } from "./router/auth/index.ts";
+import { AxiosError } from "axios";
 
 const app = express();
 app.use(cookieParser());
@@ -20,8 +21,18 @@ app.use(
     res: Response,
     _next: NextFunction
   ) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log({ err });
+    }
+
     if (err instanceof AppError) {
       return res.status(err.statusCode).json({ message: err.message });
+    }
+
+    if (err instanceof AxiosError) {
+      return res
+        .status(err?.status || err?.response?.status || 500)
+        .json({ message: err.message });
     }
     res.status(500).json({ message: "Something went wrong" });
   }
