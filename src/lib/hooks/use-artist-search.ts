@@ -1,10 +1,12 @@
 import { useState } from "react";
 import type { GetArtistAlbumsResponse } from "../../../index";
+import { HttpError } from "../utils";
 
 export default function useArtistSearch(): UseSearchArtistReturn {
   const [isLoading, setIsLoading] = useState(false);
-  const [artistData, setArtistData] =
-    useState<GetArtistAlbumsResponse | null>(null);
+  const [artistData, setArtistData] = useState<GetArtistAlbumsResponse | null>(
+    null
+  );
 
   const getArtistAlbums: UseSearchArtistReturn["getArtistAlbums"] = async (
     search
@@ -14,7 +16,7 @@ export default function useArtistSearch(): UseSearchArtistReturn {
       setIsLoading(false)
     );
     if (res.status !== 200)
-      throw new Error("The server response with a satuts code: " + res.status);
+      throw new HttpError("Failed to get artist's albums", res.status);
     const data = await res.json();
     setArtistData(data);
   };
@@ -27,7 +29,7 @@ export default function useArtistSearch(): UseSearchArtistReturn {
 }
 
 export type UseSearchArtistReturn = {
-  getArtistAlbums: (search: URLSearchParams) => void;
+  getArtistAlbums: (search: URLSearchParams) => Promise<void>;
   isLoading: boolean;
   artistData: GetArtistAlbumsResponse | null;
 };

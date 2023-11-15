@@ -2,17 +2,20 @@ import { UseSearchArtistReturn } from "@/lib/hooks/use-artist-search";
 import { Input } from "./ui/input";
 import { ArrowUp, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import useSearchToast from "@/lib/hooks/use-search-toast";
 
 export default function Search({
   onSubmit: getArtistAlbums,
   isLoading,
 }: SearchProps) {
+  const { handleError } = useSearchToast();
+
   const handleSubmit = async (e: React.FormEvent<SearchFormElement>) => {
     e.preventDefault();
     const search = new URLSearchParams({
       search: e.currentTarget.elements.search.value,
     });
-    getArtistAlbums(search);
+    getArtistAlbums(search).catch(handleError);
   };
 
   return (
