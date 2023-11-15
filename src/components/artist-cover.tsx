@@ -10,7 +10,9 @@ export default function ArtistCover({ artist }: ArtistCoverProps) {
       <div
         className={`absolute h-full w-full -z-10 bg-center bg-no-repeat bg-cover`}
         style={{
-          backgroundImage: `url(${artist.images[0].url})`,
+          backgroundImage: artist.images[0]?.url
+            ? `url(${artist.images[0].url})`
+            : undefined,
         }}
       />
       <Container className="self-end w-full py-8">
