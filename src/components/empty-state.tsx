@@ -1,4 +1,3 @@
-import useAuth from "@/lib/hooks/use-auth";
 import { Button } from "./ui/button";
 
 export default function EmptyState() {
@@ -13,8 +12,6 @@ export default function EmptyState() {
 }
 
 function Title() {
-  const { isLoggedIn } = useAuth();
-
   const focusInput = () => {
     // just in case, should not fail
     try {
@@ -23,29 +20,15 @@ function Title() {
     } catch {}
   };
 
-  if (isLoggedIn)
-    return (
-      <h1 className="text-center font-bold uppercase">
-        Start by{" "}
-        <Button
-          variant="link"
-          className="p-0 text-[inherit] uppercase font-bold text-md"
-          onClick={focusInput}
-        >
-          searching something
-        </Button>
-      </h1>
-    );
-
   return (
     <h1 className="text-center font-bold uppercase">
       Start by{" "}
       <Button
-        asChild
         variant="link"
         className="p-0 text-[inherit] uppercase font-bold text-md"
+        onClick={focusInput}
       >
-        <a href="/auth/login">login</a>
+        searching something
       </Button>
     </h1>
   );

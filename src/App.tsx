@@ -1,6 +1,5 @@
 import Search from "./components/search";
 import Header from "./components/header";
-import useAuth from "./lib/hooks/use-auth";
 import ArtistCover from "./components/artist-cover";
 import ArtistAlbumsList from "./components/artist-albums-list";
 import useArtistSearch from "./lib/hooks/use-artist-search";
@@ -13,7 +12,7 @@ import GeneralErrorBoundary from "./components/general-error-boundary";
 function App() {
   const { artistData, getArtistAlbums, isLoading, didSearch } =
     useArtistSearch();
-  const { isLoggedIn } = useAuth();
+
   const {
     isOpen: isModalOpen,
     open: openModal,
@@ -23,9 +22,7 @@ function App() {
   return (
     <>
       <Header>
-        {isLoggedIn ? (
-          <Search onSubmit={getArtistAlbums} isLoading={isLoading} />
-        ) : null}
+        <Search onSubmit={getArtistAlbums} isLoading={isLoading} />
       </Header>
       <GeneralErrorBoundary className="text-center">
         <ArtistCover artist={artistData} />

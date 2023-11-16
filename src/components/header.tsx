@@ -2,15 +2,12 @@ import { cn } from "@/lib/utils";
 import Container from "./container";
 import { ModeToggle } from "./mode-toggler";
 import type { HTMLAttributes, PropsWithChildren } from "react";
-import useAuth from "@/lib/hooks/use-auth";
-import { Button } from "./ui/button";
 
 export default function Header({
   className,
   children,
   ...rest
 }: PropsWithChildren<HTMLAttributes<HTMLElement>>) {
-  const { isLoggedIn } = useAuth();
   return (
     <header
       className={cn(
@@ -25,14 +22,7 @@ export default function Header({
           <h1 className="hidden sm:block flex-shrink-0">Challenge</h1>
         </div>
         <>{children}</>
-        <div className="ms-auto flex items-center col-start-3">
-          {!isLoggedIn ? (
-            <Button asChild className="mr-2">
-              <a href="/auth/login" className="leading-4">
-                Login
-              </a>
-            </Button>
-          ) : null}
+        <div className="ms-auto col-start-3">
           <ModeToggle />
         </div>
       </Container>
