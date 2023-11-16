@@ -9,14 +9,12 @@ import type { NextFunction, Request, Response } from "express";
 import { AxiosError } from "axios";
 import { AppError } from "./models/app-error.ts";
 import { apiRouter } from "./router/api/index.ts";
-import { authRouter } from "./router/auth/index.ts";
 import { sequelize } from "./database/db.ts";
 
 const app = express();
 app.use(cookieParser());
 
 app.use("/api", apiRouter);
-app.use("/auth", authRouter);
 
 app.use(
   <T extends Error>(
