@@ -1,27 +1,43 @@
-# React + TypeScript + Vite
+# Houlak Spotify Albums Web Project 🎵 Federico
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Para empezar
+```sh
+npm run start
+```
+`URL`: http://localhost:3000 <br><br>
+Este comando fue añadido y depende de `nodemon.json`
 
-Currently, two official plugins are available:
+### Variables de entorno
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+Normalmente requeriría el uso de varias variables de entorno, en este caso decidí hacer lo siguiente para que fuera más sencillo probar
 
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+// server/config/config.ts
+export const SPOTIFY_CLIENT_ID =
+  process.env.SPOTIFY_CLIENT_ID || "my-hardcoded-id";
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Librerías
+
+Base React, Express y Typescript
+
+### Librerías para la UI
+
+#### [TailwindCSS](https://tailwindcss.com)
+
+Me parece una gran opción para escalado y customización. Trabajando con React, no tengo que preocuparme si el componente se renderiza en el servidor o en el cliente para aplicar estilos.
+
+#### [shadcn/ui](https://ui.shadcn.com)
+
+CLI para añadir componentes directamente en el proyecto. Los elementos pueden ser puramente de HTML o en caso de necesitar buena accesibilidad, utiliza los primitivos de [Radix UI](https://www.radix-ui.com) estilizados con TailwindCSS
+
+### Librerías para el servidor
+
+#### [ViteExpress](https://github.com/szymmis/vite-express)
+
+Mi intención era hacer un monorepo para que sea más sencillo levantar la aplicación para probarla. En la [documentación de Vite](https://vitejs.dev/guide/backend-integration.html) se sugería esta librería.
+
+#### [Sequelize](https://sequelize.org) y [Sqlite3](https://www.npmjs.com/package/sqlite3)
+Encontré sqlite3 adecuado para el caso concreto, dado que puedo crear una base de datos en el filesystem o en memoria
+
+#### Nodemon
