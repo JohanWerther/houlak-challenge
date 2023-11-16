@@ -1,22 +1,21 @@
 import querystring from "querystring";
 import axios, { AxiosResponse } from "axios";
 import catchAsync from "../../utils/catch-async.ts";
-//import { AppError } from "../../models/app-error.ts";
+
 import {
   ACCESS_TOKEN_COOKIE,
+  AUTH_STATE_KEY,
   REFRESH_TOKEN_COOKIE,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET,
+  SPOTIFY_REDIRECT_URI,
 } from "../../config/config.ts";
 import { CookieOptions } from "express";
-
-const redirect_uri = "http://localhost:3000/auth/callback";
-const client_id = process.env.SPOTIFY_CLIENT_ID || undefined;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET || undefined;
-const stateKey = "spotify_auth_state";
 
 export default catchAsync(async function loginCallback(req, res) {
   const code = req.query.code || null;
   const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
+  const storedState = req.cookies ? req.cookies[AUTH_STATE_KEY] : null;
 
   if (state === null || state !== storedState) {
     res.redirect(
@@ -26,7 +25,7 @@ export default catchAsync(async function loginCallback(req, res) {
         })
     );
   } else {
-    res.clearCookie(stateKey);
+    res.clearCookie(AUTH_STATE_KEY);
 
     let tokenResponse: AxiosResponse<GetTokenResponse>;
     try {
@@ -34,7 +33,7 @@ export default catchAsync(async function loginCallback(req, res) {
         "https://accounts.spotify.com/api/token",
         {
           code: code,
-          redirect_uri: redirect_uri,
+          redirect_uri: SPOTIFY_REDIRECT_URI,
           grant_type: "authorization_code",
         },
         {
@@ -42,7 +41,7 @@ export default catchAsync(async function loginCallback(req, res) {
             "content-type": "application/x-www-form-urlencoded",
             Authorization:
               "Basic " +
-              Buffer.from(client_id + ":" + client_secret).toString("base64"),
+              Buffer.from(SPOTIFY_CLIENT_ID + ":" + SPOTIFY_CLIENT_SECRET).toString("base64"),
           },
         }
       );
