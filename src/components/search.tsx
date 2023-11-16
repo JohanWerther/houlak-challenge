@@ -24,7 +24,7 @@ export default function Search({
     <form onSubmit={handleSubmit}>
       <div className="relative">
         <Input
-          className="md:min-w-[500px] md:pr-24"
+          className="md:pr-24"
           id="search"
           name="search"
           ref={inputRef}
@@ -37,7 +37,7 @@ export default function Search({
               <ArrowUp className="h-3 w-3" />
             </Button>
           )}
-          <div className="hidden md:flex items-center bg-secondary rounded-sm px-2">
+          <div className="hidden md:flex items-center bg-secondary rounded-sm px-2 self-end">
             <Command className="w-3 h-3" /> + k
           </div>
         </div>
