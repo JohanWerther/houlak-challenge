@@ -5,10 +5,13 @@ import ArtistAlbumCard from "./artist-album-card";
 export default function ArtistAlbumsList({ albums }: ArtistAlbumsProps) {
   if (!albums) return null;
   return (
-    <Container className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 my-8">
-      {albums.map((album) => (
-        <ArtistAlbumCard album={album} key={album.id} />
-      ))}
+    <Container className="my-8" id="albums">
+      <h2 className="mb-4 font-bold">Albums</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {albums.map((album) => (
+          <ArtistAlbumCard album={album} key={album.id} />
+        ))}
+      </div>
     </Container>
   );
 }
