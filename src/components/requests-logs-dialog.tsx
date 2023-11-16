@@ -1,3 +1,4 @@
+import useRequestsLogs from "@/lib/hooks/use-requests-logs";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -7,20 +8,34 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { useEffect } from "react";
+import RequestsLogsTable from "./requests-logs-table";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export default function RequestsLogsDialog({
   isOpen,
   onOpenChange,
 }: RequestsLogsDialogProps) {
+  const { getLogs, requestsLogs } = useRequestsLogs();
+
+  useEffect(() => {
+    if (isOpen) {
+      getLogs().catch(console.error);
+    }
+  }, [isOpen]);
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Requests</AlertDialogTitle>
           <AlertDialogDescription>
-            Here we will show the list of requests made by the client
+            This should not be here
           </AlertDialogDescription>
         </AlertDialogHeader>
+        <ScrollArea className="h-80">
+          <RequestsLogsTable requestsLogs={requestsLogs} />
+          <ScrollBar orientation="horizontal"/>
+        </ScrollArea>
         <AlertDialogFooter>
           <AlertDialogCancel>Close</AlertDialogCancel>
         </AlertDialogFooter>

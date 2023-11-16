@@ -5,11 +5,12 @@ import {
   InferAttributes,
   InferCreationAttributes,
 } from "sequelize";
+import { RequestsLogsFull } from "../..";
 
 const sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: "server/test.db",
-    port: 8000
+  dialect: "sqlite",
+  storage: "server/test.db",
+  port: 8000,
 });
 
 const RequestsLogs = sequelize.define<RequestsLogs>("Request_Log", {
@@ -31,11 +32,7 @@ export { sequelize, RequestsLogs };
 
 interface RequestsLogs
   extends Model<
-    InferAttributes<RequestsLogs>,
-    InferCreationAttributes<RequestsLogs>
-  > {
-  // Some fields are optional when calling RequestsLogs.create() or UserModel.build()
-  ipAddress: string;
-  date: Date;
-  artist: string;
-}
+      InferAttributes<RequestsLogs>,
+      InferCreationAttributes<RequestsLogs>
+    >,
+    Pick<RequestsLogsFull, "ipAddress" | "artist" | "date"> {}

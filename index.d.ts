@@ -43,3 +43,11 @@ export interface ImageObject {
   height: number | null;
   width: number | null;
 }
+
+export interface RequestsLogsFull {
+  createdAt: string;
+  updatedAt: string;
+  ipAddress: string;
+  date: Date;
+  artist: string;
+}
