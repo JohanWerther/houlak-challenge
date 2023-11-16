@@ -49,7 +49,7 @@ sequelize
   .then(() => {
     console.log("Database sincronized");
     server = ViteExpress.listen(app, 3000, () =>
-      console.log("Server is listening...")
+      console.log("Server is listening http://localhost:3000")
     );
   })
   .catch(() => {
