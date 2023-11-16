@@ -1,48 +1,8 @@
-export type GetArtistAlbumsResponse = SingleArtist & {
-  albums: SimplifiedAlbumObject[];
+import { SimplifiedAlbum, Artist } from "@spotify/web-api-ts-sdk";
+
+export type GetArtistAlbumsResponse = Artist & {
+  albums: SimplifiedAlbum[];
 };
-
-export interface SingleArtist {
-  external_urls: Record<string, string>;
-  followers: Record<string, string | number | null>;
-  genres: string[];
-  href: string;
-  id: string;
-  images: ImageObject[];
-  name: string;
-  popularity: number;
-  type: string;
-  uri: string;
-}
-
-export type SimplifiedArtist = Pick<
-  SingleArtist,
-  "external_urls" | "href" | "id" | "name" | "type" | "uri"
->;
-
-export interface SimplifiedAlbumObject {
-  album_type: string;
-  total_tracks: number;
-  available_markets: string[];
-  external_urls: Record<string, string>;
-  href: string;
-  id: string;
-  images: ImageObject[];
-  name: string;
-  release_date: string;
-  release_date_precision: string;
-  restrictions: { reason: string };
-  type: string;
-  uri: string;
-  artists: SimplifiedArtist[];
-  album_group: string;
-}
-
-export interface ImageObject {
-  url: string;
-  height: number | null;
-  width: number | null;
-}
 
 export interface RequestsLogsFull {
   createdAt: string;

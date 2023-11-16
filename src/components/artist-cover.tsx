@@ -18,7 +18,7 @@ export default function ArtistCover({ artist }: ArtistCoverProps) {
       <Container className="self-end w-full py-8">
         <h2 className="text-3xl font-bold text-white">{artist.name}</h2>
 
-        <Button asChild className="mt-2 ps-0" variant="link">
+        <Button asChild className="mt-3">
           <a href={artist.external_urls["spotify"]} target="_blank">
             Ver en Spotify
           </a>
