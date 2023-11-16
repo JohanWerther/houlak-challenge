@@ -1,4 +1,4 @@
-import { SimplifiedAlbumObject } from "index";
+import { GetArtistAlbumsResponse } from "index";
 import { Button } from "./ui/button";
 import { ExternalLink } from "lucide-react";
 
@@ -32,4 +32,6 @@ export default function ArtistAlbumCard({ album }: ArtistAlbumCardProps) {
   );
 }
 
-type ArtistAlbumCardProps = { album: SimplifiedAlbumObject };
+type ArtistAlbumCardProps = {
+  album: GetArtistAlbumsResponse["albums"][number];
+};
