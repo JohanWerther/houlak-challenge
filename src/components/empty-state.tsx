@@ -1,3 +1,4 @@
+import EmptyStateSVG from "@/assets/empty-state-svg";
 import { Button } from "./ui/button";
 
 export default function EmptyState() {
@@ -5,7 +6,10 @@ export default function EmptyState() {
     <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center">
       <div>
         <Title />
-        <img src="empty.svg" className="w-96 h-96" />
+        {/* This helps to adapt the svg to theme */}
+        <div className="text-secondary">
+          <EmptyStateSVG />
+        </div>
       </div>
     </div>
   );
