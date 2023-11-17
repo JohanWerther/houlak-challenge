@@ -8,7 +8,12 @@ export default function errorHandler<T extends Error>(
   _next: NextFunction
 ) {
   if (process.env.NODE_ENV !== "production") {
-    console.log({ err });
+    console.log({ err: err?.message || err });
+  }
+
+  if (err.message === "fetch is not defined") {
+    console.log("💥 ─ Node v18.0.0+ is required due to the usage of `fetch`");
+    return res.status(500).send("Node v18.0.0+ required on the server");
   }
 
   if (err instanceof AppError) {
