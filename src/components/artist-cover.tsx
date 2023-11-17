@@ -23,7 +23,7 @@ export default function ArtistCover({ artist }: ArtistCoverProps) {
 
           <Button asChild className="mt-3">
             <a href={artist.external_urls["spotify"]} target="_blank">
-              Ver en Spotify
+              Go to Spotify
             </a>
           </Button>
         </div>
